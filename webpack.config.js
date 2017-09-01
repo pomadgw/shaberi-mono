@@ -10,7 +10,7 @@ var serverSetting = {
     'index': resolve('./server'),
   },
   output: {
-    path: resolve('.'),
+    path: resolve('./dist'),
     filename: '[name].js'
   },
   module: {
