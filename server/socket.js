@@ -4,14 +4,16 @@ import socketIO from 'socket.io';
 export default function(server) {
   const io = socketIO(server);
 
-  let chatHistory = [];
+  // let chatHistory = [];
+  let i = 0;
 
   io.on('connection', (socket) => {
-    console.log('terhubung!');
+    console.log('terhubung!', i);
+    i++;
 
-    socket.on('chat', function (data) {
-      chatHistory.push(data['text']);
-      io.emit('chat', data );
+    socket.on('send.chat', function (data) {
+      // chatHistory.push(data['text']);
+      io.emit('retrieve.chat', data );
     });
   });
 }

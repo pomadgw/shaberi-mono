@@ -7,8 +7,8 @@ function resolve (dir) {
 }
 
 const extractSass = new ExtractTextPlugin({
-  filename: "[name].[contenthash].css",
-  disable: process.env.NODE_ENV === "development"
+  filename: "[name].css",
+  disable: process.env.NODE_ENV !== "production"
 });
 
 var serverSetting = {
@@ -76,23 +76,24 @@ var clientSetting = {
       },
       {
         test: /\.(scss)$/,
-        use: [{
-          loader: 'style-loader', // inject CSS to page
-        }, {
-          loader: 'css-loader', // translates CSS into CommonJS modules
-        }, {
-          loader: 'postcss-loader', // Run post css actions
-          options: {
-            plugins: function () { // post css plugins, can be exported to postcss.config.js
-              return [
-                require('precss'),
-                require('autoprefixer')
-              ];
+        use: extractSass.extract({
+          use: [{
+            loader: 'css-loader', // translates CSS into CommonJS modules
+          }, {
+            loader: 'postcss-loader', // Run post css actions
+            options: {
+              plugins: function () { // post css plugins, can be exported to postcss.config.js
+                return [
+                  require('precss'),
+                  require('autoprefixer')
+                ];
+              }
             }
-          }
-        }, {
-          loader: 'sass-loader' // compiles SASS to CSS
-        }],
+          }, {
+            loader: 'sass-loader' // compiles SASS to CSS
+          }],
+          fallback: "style-loader"
+        }),
       },
     ],
   },
