@@ -8,8 +8,10 @@ app.use(express.static('public'));
 
 routes(app);
 
-const server = app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+const port = process.env.PORT || 3000;
+
+const server = app.listen(port, function () {
+  console.log(`Example app listening on port ${port}!`);
 });
 
 socket(server);
