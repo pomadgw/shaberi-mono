@@ -10,7 +10,6 @@ export default function(server) {
     console.log('terhubung!');
 
     socket.on('chat', function (data) {
-      console.log(data);
       chatHistory.push(data['text']);
       io.emit('chat', data );
     });
