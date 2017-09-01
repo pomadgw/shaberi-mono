@@ -18,7 +18,7 @@
   <div v-if="socket != null">
     <table class="table">
       <tr v-for="chat in chats">
-        <td>{{ chat.nickname }} says: </span></span>{{ chat.text }}</td>
+        <td :class="chat.classes">{{ chat.nickname }} says: </span></span>{{ chat.text }}</td>
       </tr>
     </table>
     <form class="form-inline" @submit.prevent="sendChat">
@@ -58,22 +58,24 @@ export default {
   },
   methods: {
     sendChat() {
-      this.socket.emit('send.chat',
-        {
-          text: this.currentChat,
-          nickname: this.nickname,
-        }
-      );
+      let data = {
+        text: this.currentChat,
+        nickname: this.nickname,
+      };
+      this.socket.emit('send.chat', data);
+      data['classes'] = 'current-user';
+      this.chats.push(data);
       this.currentChat = "";
     },
     connect() {
       if (this.socket == null) {
-        this.socket = io.connect();
+        this.socket = io.connect({ query: `nickname=${this.nickname}` });
         this.setEvents();
       }
     },
     setEvents() {
       this.socket.on('retrieve.chat', (data) => {
+        data['classes'] = '';
         this.chats.push(data);
       });
     },
@@ -84,5 +86,8 @@ export default {
 <style>
 .message {
   color: blue;
+}
+.current-user {
+  background: #55aaee;
 }
 </style>

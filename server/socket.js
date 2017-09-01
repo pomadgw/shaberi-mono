@@ -4,16 +4,25 @@ import socketIO from 'socket.io';
 export default function(server) {
   const io = socketIO(server);
 
-  // let chatHistory = [];
+  let users = [];
   let i = 0;
 
   io.on('connection', (socket) => {
-    console.log('terhubung!', i);
-    i++;
+    console.log(socket.handshake.query.nickname);
+    if (socket.handshake.query.nickname != null) {
+      users.push({
+        nickname: socket.handshake.query.nickname,
+        id: socket.id,
+        socket
+      });
+    }
 
     socket.on('send.chat', function (data) {
-      // chatHistory.push(data['text']);
-      io.emit('retrieve.chat', data );
+      const nickname = data.nickname;
+      const chosenData = users.filter(e => e.nickname !== nickname).map(e => e.socket);
+      chosenData.forEach((sock) => {
+        sock.emit('retrieve.chat', data );
+      });
     });
   });
 }
