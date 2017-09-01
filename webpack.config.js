@@ -2,15 +2,15 @@ const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+  return path.join(__dirname, '.', dir)
 }
 
 var serverSetting = {
   entry: {
-    'index': './server',
+    'index': resolve('./server'),
   },
   output: {
-    path: path.resolve(__dirname, '.'),
+    path: resolve('.'),
     filename: '[name].js'
   },
   module: {
@@ -33,10 +33,10 @@ var serverSetting = {
 
 var clientSetting = {
   entry: {
-    'bundle': path.resolve(__dirname, './src'),
+    'bundle': resolve('./src'),
   },
   output: {
-    path: path.resolve(__dirname, './public'),
+    path: resolve('./public'),
     filename: '[name].js'
   },
   resolve: {

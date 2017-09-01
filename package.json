@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Rahadian Yusuf",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
     "express": "^4.15.4",
     "socket.io": "^2.0.3",
