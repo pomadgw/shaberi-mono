@@ -7,8 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "start": "webpack && nodemon ./dist/index.js & webpack --watch",
-    "postinstall": "webpack"
+    "start": "webpack && nodemon ./dist/index.js & webpack --watch"
   },
   "dependencies": {
     "bootstrap": "4.0.0-beta",
