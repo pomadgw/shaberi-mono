@@ -4,7 +4,7 @@ import socketIO from 'socket.io';
 export default function(server) {
   const io = socketIO(server);
 
-  const MAX_SIZE = 5;
+  const MAX_SIZE = 1000;
 
   let users = [];
   let chatsHistories = [];
