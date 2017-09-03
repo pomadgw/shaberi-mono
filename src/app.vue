@@ -10,7 +10,8 @@
         </div>
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" :disabled="disableNick">Connect</button>
+        <button type="submit" class="btn btn-primary" v-if="!disableNick">Connect</button>
+        <button type="submit" class="btn btn-primary" v-else>Disconnect</button>
       </div>
     </div>
   </form>
@@ -71,12 +72,26 @@ export default {
       if (this.socket == null) {
         this.socket = io.connect({ query: `nickname=${this.nickname}` });
         this.setEvents();
+      } else {
+        this.disconnect();
       }
+    },
+    disconnect() {
+      this.socket.disconnect();
+      this.socket = null;
     },
     setEvents() {
       this.socket.on('retrieve.chat', (data) => {
         data['classes'] = '';
         this.chats.push(data);
+      });
+      this.socket.on('send.chat.histories', (data) => {
+        this.chats = data;
+        this.chats.forEach((element) => {
+          if (element.nickname === this.nickname) {
+            element['classes'] = 'current-user';
+          }
+        });
       });
     },
   },

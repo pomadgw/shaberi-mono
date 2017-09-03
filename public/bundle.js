@@ -14715,7 +14715,13 @@ exports.default = {
       if (this.socket == null) {
         this.socket = _socket2.default.connect({ query: 'nickname=' + this.nickname });
         this.setEvents();
+      } else {
+        this.disconnect();
       }
+    },
+    disconnect: function disconnect() {
+      this.socket.disconnect();
+      this.socket = null;
     },
     setEvents: function setEvents() {
       var _this = this;
@@ -14724,9 +14730,18 @@ exports.default = {
         data['classes'] = '';
         _this.chats.push(data);
       });
+      this.socket.on('send.chat.histories', function (data) {
+        _this.chats = data;
+        _this.chats.forEach(function (element) {
+          if (element.nickname === _this.nickname) {
+            element['classes'] = 'current-user';
+          }
+        });
+      });
     }
   }
 }; //
+//
 //
 //
 //
@@ -18001,12 +18016,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-auto"
-  }, [_c('button', {
+  }, [(!_vm.disableNick) ? _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableNick
+      "type": "submit"
     }
-  }, [_vm._v("Connect")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.socket != null) ? _c('div', [_c('table', {
+  }, [_vm._v("Connect")]) : _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Disconnect")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.socket != null) ? _c('div', [_c('table', {
     staticClass: "table"
   }, _vm._l((_vm.chats), function(chat) {
     return _c('tr', [_c('td', {

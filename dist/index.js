@@ -135,11 +135,16 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (server) {
   var io = (0, _socket2.default)(server);
 
+  var MAX_SIZE = 5;
+
   var users = [];
+  var chatsHistories = [];
   var i = 0;
 
   io.on('connection', function (socket) {
     console.log(socket.handshake.query.nickname);
+    socket.emit('send.chat.histories', chatsHistories);
+
     if (socket.handshake.query.nickname != null) {
       users.push({
         nickname: socket.handshake.query.nickname,
@@ -155,9 +160,24 @@ exports.default = function (server) {
       }).map(function (e) {
         return e.socket;
       });
+      chatsHistories.push(data);
+      if (chatsHistories.length > MAX_SIZE) {
+        chatsHistories.shift();
+        socket.emit('send.chat.histories', chatsHistories);
+      }
       chosenData.forEach(function (sock) {
         sock.emit('retrieve.chat', data);
       });
+    });
+
+    socket.on('disconnect', function () {
+      var user = users.filter(function (e) {
+        return e.id == socket.id;
+      })[0];
+      console.log('Disconnected:', user.nickname);
+      var id = users.indexOf(user);
+      console.log('id:', id);
+      users.splice(id, 1);
     });
   });
 };
