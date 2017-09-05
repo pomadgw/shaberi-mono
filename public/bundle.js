@@ -14311,7 +14311,7 @@ exports = module.exports = __webpack_require__(9)(undefined);
 
 
 // module
-exports.push([module.i, "\n.message {\n  color: blue;\n}\n.current-user {\n  background: #55aaee;\n}\n", ""]);
+exports.push([module.i, "\n.message {\n  color: blue;\n}\n.current-user {\n  background: #55aaee;\n}\n.bottom-chat {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  width: 95%;\n  margin: auto;\n  padding: 12px 0;\n}\n.bottom-chat .row {\n  margin: 0;\n}\n.bottom-chat .col,\n.bottom-chat .col-auto {\n  padding: 0;\n}\n.table-wrap {\n  height: 700px;\n  overflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -14741,6 +14741,10 @@ exports.default = {
     }
   }
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -18026,13 +18030,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Disconnect")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.socket != null) ? _c('div', [_c('table', {
+  }, [_vm._v("Disconnect")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.socket != null) ? _c('div', [_c('div', {
+    staticClass: "table-wrap"
+  }, [_c('table', {
     staticClass: "table"
   }, _vm._l((_vm.chats), function(chat) {
     return _c('tr', [_c('td', {
       class: chat.classes
     }, [_vm._v(_vm._s(chat.nickname) + " says: "), _vm._v(_vm._s(chat.text))])])
-  })), _vm._v(" "), _c('form', {
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "bottom-chat"
+  }, [_c('form', {
     staticClass: "form-inline",
     on: {
       "submit": function($event) {
@@ -18041,9 +18049,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }
   }, [_c('div', {
-    staticClass: "form-row align-items-center"
+    staticClass: "row align-items-center",
+    staticStyle: {
+      "width": "100%"
+    }
   }, [_c('div', {
-    staticClass: "col-auto"
+    staticClass: "col"
   }, [_c('label', {
     staticClass: "sr-only",
     attrs: {
@@ -18060,6 +18071,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
+      "autocomplete": "off",
       "type": "text",
       "id": "nickname",
       "placeholder": "Chat!"
@@ -18073,7 +18085,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.currentChat = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(0)])])]) : _vm._e()])
+  })])]), _vm._v(" "), _vm._m(0)])])])]) : _vm._e()])
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {

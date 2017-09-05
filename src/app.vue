@@ -17,24 +17,28 @@
   </form>
   <br>
   <div v-if="socket != null">
-    <table class="table">
-      <tr v-for="chat in chats">
-        <td :class="chat.classes">{{ chat.nickname }} says: </span></span>{{ chat.text }}</td>
-      </tr>
-    </table>
-    <form class="form-inline" @submit.prevent="sendChat">
-      <div class="form-row align-items-center">
-        <div class="col-auto">
-          <label class="sr-only" for="nickname">Chat</label>
-          <div class="input-group mb-2 mb-sm-0">
-            <input type="text" class="form-control" v-model="currentChat" id="nickname" placeholder="Chat!">
+    <div class="table-wrap">
+      <table class="table">
+        <tr v-for="chat in chats">
+          <td :class="chat.classes">{{ chat.nickname }} says: </span></span>{{ chat.text }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="bottom-chat">
+      <form class="form-inline" @submit.prevent="sendChat">
+        <div class="row align-items-center" style="width: 100%">
+          <div class="col">
+            <label class="sr-only" for="nickname">Chat</label>
+            <div class="input-group mb-2 mb-sm-0">
+              <input autocomplete="off" type="text" class="form-control" v-model="currentChat" id="nickname" placeholder="Chat!">
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="Submit" class="btn btn-primary">Send</button>
           </div>
         </div>
-        <div class="col-auto">
-          <button type="Submit" class="btn btn-primary">Send</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 </template>
@@ -104,5 +108,25 @@ export default {
 }
 .current-user {
   background: #55aaee;
+}
+.bottom-chat {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 95%;
+  margin: auto;
+  padding: 12px 0;
+}
+.bottom-chat .row {
+  margin: 0;
+}
+.bottom-chat .col,
+.bottom-chat .col-auto {
+  padding: 0;
+}
+.table-wrap {
+  height: 700px;
+  overflow-y: scroll;
 }
 </style>

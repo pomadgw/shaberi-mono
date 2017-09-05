@@ -135,7 +135,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (server) {
   var io = (0, _socket2.default)(server);
 
-  var MAX_SIZE = 5;
+  var MAX_SIZE = 1000;
 
   var users = [];
   var chatsHistories = [];
